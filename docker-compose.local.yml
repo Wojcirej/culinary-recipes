@@ -1,0 +1,40 @@
+name: culinary_recipes
+services:
+  web:
+    networks:
+      - network
+    build:
+      context: '.'
+      dockerfile: Dockerfile.local
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    container_name: web
+    ports:
+      - "3000:3000"
+    command: npm run start:dev
+    volumes:
+      - ./:/usr/src/app/
+
+  debug:
+    networks:
+      - network
+    build:
+      context: '.'
+      dockerfile: Dockerfile.local
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    container_name: debug
+    ports:
+      - "3001:3001"
+    command: tail -f /dev/null
+    volumes:
+      - ./:/usr/src/app/
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  databases_volume:
