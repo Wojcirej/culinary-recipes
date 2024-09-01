@@ -32,9 +32,22 @@ services:
     volumes:
       - ./:/usr/src/app/
 
+  database:
+    networks:
+      - network
+    volumes:
+      - database_volume:/var/lib/postgresql/data
+    image: postgres:15.4-bookworm
+    environment:
+      POSTGRES_USER: kucharz
+      POSTGRES_PASSWORD: password
+    container_name: database
+    ports:
+      - "5432:5432"
+
 networks:
   network:
     driver: bridge
 
 volumes:
-  databases_volume:
+  database_volume:

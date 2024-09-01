@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "== Removing containers... =="
+docker-compose -f docker-compose.local.yml down
+echo "== Removing application image =="
+docker rmi culinary_recipes-web
+docker rmi culinary_recipes-debug
+docker volume rm culinary_recipes_database_volume
