@@ -9,7 +9,7 @@ env:
   node_version: 20.14.x
 
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -24,3 +24,5 @@ jobs:
       run: npm install
     - name: Lint
       run: npm run lint
+    - name: Run tests
+      run: npm run test:cov
