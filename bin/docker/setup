@@ -5,12 +5,7 @@ rm -rf node_modules
 npm install
 echo "== Stop web container so it won't interrupt setup =="
 docker-compose -f docker-compose.local.yml stop web
-# docker-compose -f docker-compose.local.yml exec 
-echo "== Creating fresh databases =="
-docker-compose -f docker-compose.local.yml exec debug rails db:create
-echo "== Load database schema =="
-docker-compose -f docker-compose.local.yml exec debug rails db:structure:load
-echo "== Seed only development database =="
-docker-compose -f docker-compose.local.yml exec debug rails db:seed RAILS_ENV=development
+echo "== Setting up databases =="
+docker-compose -f docker-compose.local.yml exec debug npx prisma db push
 echo "== Start web and container again =="
 docker-compose -f docker-compose.local.yml start web
