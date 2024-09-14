@@ -15,6 +15,8 @@ services:
     command: npm run start:dev
     volumes:
       - ./:/usr/src/app/
+    environment:
+      DATABASE_URL: postgresql://kucharz:password@database:5432/culinary_recipes_development
 
   debug:
     networks:
@@ -31,6 +33,8 @@ services:
     command: tail -f /dev/null
     volumes:
       - ./:/usr/src/app/
+    environment:
+      DATABASE_URL: postgresql://kucharz:password@database:5432/culinary_recipes_development
 
   database:
     networks:
