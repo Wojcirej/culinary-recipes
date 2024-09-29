@@ -4,15 +4,12 @@ import { AddNewRecipeController } from './addNewRecipe.controller';
 import * as request from 'supertest';
 
 describe('AddNewRecipeController', () => {
-  let controller: AddNewRecipeController;
   let app: INestApplication;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AddNewRecipeController],
     }).compile();
-
-    controller = module.get<AddNewRecipeController>(AddNewRecipeController);
 
     app = module.createNestApplication();
     app.useGlobalPipes(

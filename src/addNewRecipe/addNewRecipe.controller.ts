@@ -1,29 +1,17 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Post,
-  Res,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Post, Res, ValidationPipe } from '@nestjs/common';
 import { Response } from 'express';
 import { AddNewRecipeCommand } from './addNewRecipe.command';
+import { RecipesInMemoryRepository } from '../domain/recipe.repository';
 
 @Controller('recipes')
 export class AddNewRecipeController {
-  constructor() {}
-
   @Post()
   async create(
     @Body(new ValidationPipe({ transform: true })) command: AddNewRecipeCommand,
     @Res() response: Response,
   ) {
-    if (command.IsValid()) {
-      response.status(HttpStatus.CREATED).send({ message: 'Success' });
-    } else {
-      response.status(HttpStatus.UNPROCESSABLE_ENTITY).send({
-        message: 'Invalid payload',
-      });
-    }
+    const repository = new RecipesInMemoryRepository();
+    const { status, payload } = command.execute(repository).getResponse();
+    response.status(status).send(payload);
   }
 }
