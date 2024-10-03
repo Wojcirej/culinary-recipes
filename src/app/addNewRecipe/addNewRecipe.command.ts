@@ -1,24 +1,25 @@
 import { Type } from 'class-transformer';
-import { IRepository } from './../domain/interfaces';
+import { IRepository } from './../../domain/interfaces';
 import { AddNewRecipeResponse } from './addNewRecipe.interfaces';
 import { AddNewRecipeService } from './addNewRecipe.service';
+import { Command } from './../../app/interfaces';
 
-export class AddNewRecipeCommand {
+export class AddNewRecipeCommand implements Command {
   private readonly recipeName: string;
   @Type(() => Ingredient)
   private readonly ingredients: Ingredient[];
   private readonly description: string;
   private readonly instructions: string;
 
-  public IsValid(): boolean {
+  public isValid(): boolean {
     return (
       this.ingredients.length > 0 &&
       this.ingredients.every((ingredient) => ingredient.IsValid())
     );
   }
 
-  public IsInvalid(): boolean {
-    return !this.IsValid();
+  public isInvalid(): boolean {
+    return !this.isValid();
   }
 
   public toObject(): object {

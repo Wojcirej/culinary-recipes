@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
-import { AddNewRecipeModule } from './addNewRecipe/addNewRecipe.module';
+import { AddNewRecipeModule } from './app/addNewRecipe/addNewRecipe.module';
 import configuration from './../config/settings/main';
 
 @Module({

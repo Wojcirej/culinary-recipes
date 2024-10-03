@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Res, ValidationPipe } from '@nestjs/common';
 import { Response } from 'express';
 import { AddNewRecipeCommand } from './addNewRecipe.command';
-import { RecipesInMemoryRepository } from '../domain/recipe.repository';
+import { RecipesInMemoryRepository } from '../../domain/recipe.repository';
 
 @Controller('recipes')
 export class AddNewRecipeController {

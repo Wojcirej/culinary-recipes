@@ -1,11 +1,11 @@
-import { IRepository } from './../domain/interfaces';
+import { IRepository } from './../../domain/interfaces';
 import { AddNewRecipeCommand } from './addNewRecipe.command';
 import { AddNewRecipeResponse } from './addNewRecipe.interfaces';
 import {
   AddNewRecipeSuccessResponse,
   AddNewRecipeInvalidPayloadResponse,
 } from './addNewRecipe.responses';
-import { RecipeFactory } from './../domain/recipe.factory';
+import { RecipeFactory } from './../../domain/recipe.factory';
 import { Recipe } from 'src/domain/recipe.model';
 
 export class AddNewRecipeService {
@@ -18,7 +18,7 @@ export class AddNewRecipeService {
   }
 
   public execute(): AddNewRecipeResponse {
-    if (this.command.IsInvalid()) {
+    if (this.command.isInvalid()) {
       return new AddNewRecipeInvalidPayloadResponse();
     }
     const recipe: Recipe = RecipeFactory.fromCommandAttributes(
