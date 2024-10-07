@@ -17,6 +17,7 @@ services:
       - ./:/usr/src/app/
     environment:
       DATABASE_URL: postgresql://kucharz:password@database:5432/culinary_recipes_development
+      DATABASE_HOST: database
 
   debug:
     networks:
@@ -35,6 +36,7 @@ services:
       - ./:/usr/src/app/
     environment:
       DATABASE_URL: postgresql://kucharz:password@database:5432/culinary_recipes_development
+      DATABASE_HOST: database
 
   database:
     networks:

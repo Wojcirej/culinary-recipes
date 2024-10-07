@@ -1,8 +1,9 @@
 import { Type } from 'class-transformer';
-import { IRepository } from './../../domain/interfaces';
 import { AddNewRecipeResponse } from './addNewRecipe.interfaces';
 import { AddNewRecipeService } from './addNewRecipe.service';
 import { Command } from './../../app/interfaces';
+import { IRecipesRepository } from './../../domain/recipes/interfaces';
+import { RecipesRepository } from './../../domain/recipes/recipe.repository';
 
 export class AddNewRecipeCommand implements Command {
   private readonly recipeName: string;
@@ -31,8 +32,9 @@ export class AddNewRecipeCommand implements Command {
     };
   }
 
-  public execute(repository: IRepository): AddNewRecipeResponse {
-    return new AddNewRecipeService(this, repository).execute();
+  public execute(repository?: IRecipesRepository): AddNewRecipeResponse {
+    const repo = repository || new RecipesRepository();
+    return new AddNewRecipeService(this, repo).execute();
   }
 }
 

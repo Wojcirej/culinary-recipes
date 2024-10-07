@@ -11,6 +11,17 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13.11-bookworm
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: culinary_recipes_test
+          POSTGRES_USER: kucharz
+          POSTGRES_PASSWORD: password
+    env:
+      CULINARY_RECIPES_ENV: test
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -24,5 +35,7 @@ jobs:
       run: npm install
     - name: Lint
       run: npm run lint
+    - name: Setup database
+      run: npm run prisma:migrate:test
     - name: Run tests
       run: npm run test:cov

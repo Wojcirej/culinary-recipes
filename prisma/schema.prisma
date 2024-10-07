@@ -6,3 +6,24 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Recipe {
+  id              Int      @id @default(autoincrement())
+  name            String
+  description     String
+  instructions    String
+  ingredients     Ingredient[]
+
+  @@map("recipes")
+}
+
+model Ingredient {
+  id            Int @id @default(autoincrement())
+  name          String
+  quantity      Int
+  quantityUnit  String
+  recipe        Recipe @relation(fields: [recipeId], references: [id])
+  recipeId      Int
+
+  @@map("ingredients")
+}

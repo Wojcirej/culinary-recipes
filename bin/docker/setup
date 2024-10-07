@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "== Install dependendies =="
-rm -rf node_modules
 npm install
 echo "== Stop web container so it won't interrupt setup =="
 docker-compose -f docker-compose.local.yml stop web
 echo "== Setting up databases =="
 docker-compose -f docker-compose.local.yml exec debug npx prisma db push
+docker-compose -f docker-compose.local.yml exec debug bash -c "DATABASE_URL=postgresql://kucharz:password@database:5432/culinary_recipes_test npx prisma db push"
 echo "== Start web and container again =="
 docker-compose -f docker-compose.local.yml start web

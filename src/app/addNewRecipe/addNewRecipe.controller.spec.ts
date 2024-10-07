@@ -63,12 +63,12 @@ describe('AddNewRecipeController', () => {
           ingredients: [
             {
               name: 'jajka',
-              quantity: '4',
+              quantity: 4,
               quantityUnit: 'szt.',
             },
             {
               name: 'masło',
-              quantity: '20',
+              quantity: 20,
               quantityUnit: 'g',
             },
           ],
@@ -90,12 +90,12 @@ describe('AddNewRecipeController', () => {
           ingredients: [
             {
               name: 'jajka',
-              quantity: '4',
+              quantity: 4,
               quantityUnit: 'szt.',
             },
             {
               name: 'masło',
-              quantity: '20',
+              quantity: 20,
               quantityUnit: 'g',
             },
           ],

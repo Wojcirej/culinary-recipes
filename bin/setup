@@ -2,6 +2,8 @@
 
 echo "== Install dependendies =="
 rm -rf node_modules
+nvm use
 npm install
 echo "== Setting up databases =="
 npx prisma db push
+DATABASE_URL=postgresql://kucharz:password@localhost:5432/culinary_recipes_test npx prisma db push

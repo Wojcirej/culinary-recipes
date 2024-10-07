@@ -12,13 +12,16 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "prisma:migrate:dev": "npx prisma migrate dev",
-    "prisma:migrate:test": "",
+    "prisma:migrate:dev": "CULINARY_RECIPES_ENV=development npx ts-node bin/migrate.ts",
+    "prisma:migrate:test": "CULINARY_RECIPES_ENV=test npx ts-node bin/migrate.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test": "CULINARY_RECIPES_ENV=test jest",
+    "test:watch": "CULINARY_RECIPES_ENV=test jest --watch",
+    "test:cov": "CULINARY_RECIPES_ENV=test jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:prisma:migrate:dev": "bin/docker/migrate development",
+    "docker:prisma:migrate:test": "bin/docker/migrate test",
+    "docker:test": "bin/docker/run_tests"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -71,6 +74,11 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "verbose": true,
+    "randomize": true,
+    "showSeed": true,
+    "globalTeardown": "./../testTeardown.ts",
+    "reporters": ["default", ["github-actions", { "silent": false }] ]
   }
 }

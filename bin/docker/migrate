@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose -f docker-compose.local.yml exec debug bash -c "CULINARY_RECIPES_ENV=$1 npx ts-node bin/migrate.ts"
