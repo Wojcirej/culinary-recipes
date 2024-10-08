@@ -1,6 +1,6 @@
 import { Recipe } from './recipe.model';
 import { IRecipesRepository } from './interfaces';
-import { CulinaryRecipesPrismaClient } from './../../../prisma/culinaryRecipesPrismaClient';
+import { CulinaryRecipesPrismaClient } from '../../infrastructure/culinaryRecipesPrismaClient';
 
 export class RecipesRepository implements IRecipesRepository {
   private readonly database: CulinaryRecipesPrismaClient;

@@ -1,4 +1,4 @@
-import { CulinaryRecipesPrismaClient } from '../prisma/culinaryRecipesPrismaClient';
+import { CulinaryRecipesPrismaClient } from '../src/infrastructure/culinaryRecipesPrismaClient';
 import { exec } from 'child_process';
 
 const connectionString = CulinaryRecipesPrismaClient.prepareConnectionString();

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import configuration from '../config/settings/main';
+import configuration from '../../config/settings/main';
 
 export class CulinaryRecipesPrismaClient extends PrismaClient {
   constructor() {

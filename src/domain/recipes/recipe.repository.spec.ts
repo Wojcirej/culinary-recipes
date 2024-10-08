@@ -1,7 +1,7 @@
 import { RecipeFactory } from './recipe.factory';
 import { RecipesRepository } from './recipe.repository';
 import { Ingredient, Recipe } from './recipe.model';
-import { CulinaryRecipesPrismaClient } from './../../../prisma/culinaryRecipesPrismaClient';
+import { CulinaryRecipesPrismaClient } from '../../infrastructure/culinaryRecipesPrismaClient';
 
 describe('RecipesRepository', () => {
   const subject = new RecipesRepository();
