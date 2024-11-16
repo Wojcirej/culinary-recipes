@@ -13,6 +13,9 @@ export class AddNewRecipeCommand implements Command {
   private readonly instructions: string;
 
   public isValid(): boolean {
+    if (this.ingredients === undefined) {
+      return false;
+    }
     return (
       this.ingredients.length > 0 &&
       this.ingredients.every((ingredient) => ingredient.IsValid())

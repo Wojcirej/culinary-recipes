@@ -21,6 +21,27 @@ describe('AddNewRecipeController', () => {
   });
 
   describe('POST /recipes', () => {
+    describe('when empty payload provided', () => {
+      it('responds with HTTP 422 status', async () => {
+        return request(app.getHttpServer())
+          .post('/recipes')
+          .set('Accept', 'application/json')
+          .send({})
+          .expect('Content-Type', /json/)
+          .expect(422);
+      });
+
+      it('responds with appropriate error message', async () => {
+        return request(app.getHttpServer())
+          .post('/recipes')
+          .set('Accept', 'application/json')
+          .send({})
+          .then((response) => {
+            expect(response.body).toEqual({ message: 'Invalid payload' });
+          });
+      });
+    });
+
     describe('when invalid payload provided', () => {
       it('responds with HTTP 422 status', async () => {
         const payload = {
@@ -42,6 +63,63 @@ describe('AddNewRecipeController', () => {
         const payload = {
           recipeName: 'Jajecznica',
           ingredients: [],
+          description: 'Proste i pyszne śniadanie na dobry początek dnia!',
+          instructions: 'Rozbić jajka, wybełtać, usmażyć i gotowe :)))',
+        };
+
+        return request(app.getHttpServer())
+          .post('/recipes')
+          .set('Accept', 'application/json')
+          .send(payload)
+          .then((response) => {
+            expect(response.body).toEqual({ message: 'Invalid payload' });
+          });
+      });
+    });
+
+    describe('when invalid payload for ingredients provided', () => {
+      it('responds with HTTP 422 status', async () => {
+        const payload = {
+          recipeName: 'Jajecznica',
+          ingredients: [
+            {
+              name: 'jajka',
+              quantity: 4,
+              quantityUnit: 'szt.',
+            },
+            {
+              name: 'masło',
+              quantity: 0,
+              quantityUnit: 'g',
+            },
+          ],
+          description: 'Proste i pyszne śniadanie na dobry początek dnia!',
+          instructions: 'Rozbić jajka, wybełtać, usmażyć i gotowe :)))',
+        };
+
+        return request(app.getHttpServer())
+          .post('/recipes')
+          .set('Accept', 'application/json')
+          .send(payload)
+          .expect('Content-Type', /json/)
+          .expect(422);
+      });
+
+      it('responds with appropriate error message', async () => {
+        const payload = {
+          recipeName: 'Jajecznica',
+          ingredients: [
+            {
+              name: 'jajka',
+              quantity: 4,
+              quantityUnit: 'szt.',
+            },
+            {
+              name: 'masło',
+              quantity: 0,
+              quantityUnit: 'g',
+            },
+          ],
           description: 'Proste i pyszne śniadanie na dobry początek dnia!',
           instructions: 'Rozbić jajka, wybełtać, usmażyć i gotowe :)))',
         };
