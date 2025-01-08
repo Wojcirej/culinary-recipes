@@ -7,6 +7,10 @@ describe('RecipesRepository', () => {
   const subject = new RecipesRepository();
   const database = new CulinaryRecipesPrismaClient();
 
+  afterEach(async () => {
+    await database.clearDatabase();
+  });
+
   describe('#save', () => {
     describe('when valid data provided', () => {
       const recipe = RecipeFactory.forTest();
@@ -111,7 +115,7 @@ describe('RecipesRepository', () => {
     describe('when record with provided name exists', () => {
       const recipe = RecipeFactory.forTest();
 
-      beforeAll(async () => {
+      beforeEach(async () => {
         await subject.save(recipe);
       });
 
@@ -143,6 +147,33 @@ describe('RecipesRepository', () => {
         expect(secondIngredient.quantity).toEqual(20);
         expect(secondIngredient.quantityUnit).toEqual('g');
       });
+    });
+  });
+
+  describe('#findAll', () => {
+    it('returns collection of Recipe objects', async () => {
+      const recipe = RecipeFactory.forTest();
+      await subject.save(recipe);
+      const result = await subject.findAll();
+      const expectedCount = await database.recipe.count();
+
+      expect(result.length).toEqual(expectedCount);
+    });
+
+    it('returns collection of Recipe objects with consideration of pagination params', async () => {
+      const recipe = RecipeFactory.forTest();
+      const anotherRecipe = RecipeFactory.forTest();
+      const persistedRecipe = await subject.save(recipe);
+      const persistedAnotherRecipe = await subject.save(anotherRecipe);
+      const result = await subject.findAll(2, 1);
+
+      expect(result.length).toEqual(1);
+      expect(result[0].id).toEqual(persistedAnotherRecipe.id);
+      expect(result[0].instructions).toEqual(
+        persistedAnotherRecipe.instructions,
+      );
+      expect(result[0].recipeName).toEqual(persistedAnotherRecipe.recipeName);
+      expect(result[0].description).toEqual(persistedAnotherRecipe.description);
     });
   });
 });

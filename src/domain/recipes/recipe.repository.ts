@@ -46,6 +46,28 @@ export class RecipesRepository implements IRecipesRepository {
       throw new RecipeNotFoundByNameError(error.message, name);
     }
   }
+
+  public async findAll(page = 1, perPage = 25): Promise<Recipe[]> {
+    try {
+      const result = await this.database.recipe.findMany({
+        include: { ingredients: true },
+        skip: (page - 1) * perPage,
+        take: perPage,
+      });
+      const recipes = result.map((recipe) => {
+        return new Recipe({
+          id: recipe.id,
+          recipeName: recipe.name,
+          description: recipe.description,
+          instructions: recipe.instructions,
+          ingredients: recipe.ingredients,
+        });
+      });
+      return recipes;
+    } catch (error) {
+      throw new FetchingRecipesError(error.message);
+    }
+  }
 }
 
 export class RecipesInMemoryRepository implements IRecipesRepository {
@@ -58,6 +80,10 @@ export class RecipesInMemoryRepository implements IRecipesRepository {
   public async save(recipe: Recipe): Promise<Recipe> {
     this.database.push(recipe);
     return recipe;
+  }
+
+  public async findAll(page: number, perPage: number): Promise<Recipe[]> {
+    return this.database;
   }
 }
 
@@ -76,5 +102,14 @@ class RecipeNotCreatedError extends Error {
   constructor(message: string) {
     super(`Recipe couldn't be saved: ${message}`);
     this.name = 'RecipeNotCreatedError';
+  }
+}
+
+class FetchingRecipesError extends Error {
+  readonly name: string;
+
+  constructor(message: string) {
+    super(`Couldn't fetch Recipes: ${message}`);
+    this.name = 'FetchingRecipesError';
   }
 }
