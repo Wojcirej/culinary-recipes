@@ -21,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "docker:prisma:migrate:dev": "bin/docker/migrate development",
     "docker:prisma:migrate:test": "bin/docker/migrate test",
-    "docker:test": "bin/docker/run_tests"
+    "docker:test": "bin/docker/run_tests",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -34,7 +35,10 @@
     "nestjs-prisma": "0.23.0",
     "prisma": "^5.19.1",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "0.3.20",
+    "typeorm-extensions": "1.2.6",
+    "pg": "^8.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
