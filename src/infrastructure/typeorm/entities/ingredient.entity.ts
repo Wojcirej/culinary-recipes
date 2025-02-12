@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import Recipe from './recipe.entity';
 
 @Entity()
 export class Ingredient extends BaseEntity {
@@ -13,4 +14,7 @@ export class Ingredient extends BaseEntity {
 
   @Column()
   quantityUnit: string;
+
+  @ManyToOne(() => Recipe, (recipe) => recipe.ingredients)
+  recipe: Recipe;
 }

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { Recipe } from './entities/recipe.entity';
+import Recipe from './entities/recipe.entity';
 import { Ingredient } from './entities/ingredient.entity';
 import configuration from '../../../config/settings/main';
 const { database } =
